@@ -2,28 +2,28 @@ import pygame
 import random
 
 #stałe
+SCREEN_WIDTH = 300
+SCREEN_HEIGHT = 400
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 BLUE = (0, 128, 255)
 FPS = 35
 
+x = 30
+y = 30
+
 pygame.init()
 
 size = [300,400]
 screen = pygame.display.set_mode(size)
 
-done = False
-#blue = True
-
 clock = pygame.time.Clock()
-
-x = 30
-y = 30
 
 font = pygame.font.Font(None, 36)
 
 game_over = False
+done = False
 
 while not done:
     for event in pygame.event.get():
