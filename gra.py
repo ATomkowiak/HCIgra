@@ -14,7 +14,6 @@ size = [300,400]
 screen = pygame.display.set_mode(size)
 
 done = False
-#blue = True
 
 clock = pygame.time.Clock()
 
