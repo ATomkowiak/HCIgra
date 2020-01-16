@@ -18,6 +18,8 @@ pygame.init()
 size = [300,400]
 screen = pygame.display.set_mode(size)
 
+done = False
+
 clock = pygame.time.Clock()
 
 font = pygame.font.Font(None, 36)
@@ -50,6 +52,8 @@ while not done:
         text_x = screen.get_width() / 2 - text_rect.width / 2
         text_y = screen.get_height() / 2 - text_rect.height / 2
         screen.blit(text, [text_x, text_y])
+        game_over=False
+
 
     clock.tick(FPS)
 
