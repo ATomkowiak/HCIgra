@@ -32,7 +32,7 @@ while not done:
     if not game_over:
         y += 2
         pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_SPACE]: y-= 15
+        if pressed[pygame.K_SPACE]: y-= 12
 
     screen.fill(BLACK)
 
