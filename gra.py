@@ -22,12 +22,18 @@ x_gracz = 30
 y_gracz = 30
 
 #współrzędne początkowe dolnej przeszkody
-y_down = random.randint(0,120)
-x_down = 390
+y_down = random.randint(30,350)
+x_down = 290
+
+#długość dolnej
+h_down = 300 - y_down
 
 #współrzędne początkowe górnej przeszkody
-y_up = random.randint(180,300)
-x_up = 390
+y_up = y_down+80
+x_up = 290
+
+#długosć górnej
+h_up=300 - y_up
 
 font = pygame.font.Font(None, 36)
 
@@ -40,17 +46,25 @@ while not done:
             done = True
 
     #kończy
-    if y_gracz > 350 or y_gracz < 0:
+    if y_gracz > 375 or y_gracz < 0:
         game_over = True
+
     #sterowanie
     if not game_over:
         y_gracz += 2.5
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]: y_gracz-= 12
 
+    if not game_over:
+        x_up-=2.5
+        x_down-=2.5
+
     screen.fill(BLACK) #żeby się kwadrat nie zostawał
 
-    pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 50, 50])
+    pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 25, 25])
+    pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
+    pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
+
 
     if game_over:
         # jeśli game_over jest prawidziwe skończ grę
