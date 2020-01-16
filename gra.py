@@ -1,10 +1,12 @@
 import pygame
 import random
 
+#stałe
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 BLUE = (0, 128, 255)
+FPS = 35
 
 pygame.init()
 
@@ -49,7 +51,7 @@ while not done:
         text_y = screen.get_height() / 2 - text_rect.height / 2
         screen.blit(text, [text_x, text_y])
 
-    clock.tick(60)
+    clock.tick(FPS)
 
     pygame.display.flip()
 
