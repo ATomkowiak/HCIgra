@@ -17,8 +17,17 @@ done = False
 
 clock = pygame.time.Clock()
 
-x = 30
-y = 30
+#współrzędne początkowe gracza
+x_gracz = 30
+y_gracz = 30
+
+#współrzędne początkowe dolnej przeszkody
+y_down = random.randint(0,120)
+x_down = 390
+
+#współrzędne początkowe górnej przeszkody
+y_up = random.randint(180,300)
+x_up = 390
 
 font = pygame.font.Font(None, 36)
 
@@ -30,17 +39,17 @@ while not done:
             done = True
 
 
-    if y > 350 or y < 0:
+    if y_gracz > 350 or y_gracz < 0:
         game_over = True
 
     if not game_over:
-        y += 2.5
+        y_gracz += 2.5
         pressed = pygame.key.get_pressed()
-        if pressed[pygame.K_SPACE]: y-= 12
+        if pressed[pygame.K_SPACE]: y_gracz-= 12
 
     screen.fill(BLACK)
 
-    pygame.draw.rect(screen, BLUE, [x, y, 50, 50])
+    pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 50, 50])
 
     if game_over:
         # If game over is true, draw game over
