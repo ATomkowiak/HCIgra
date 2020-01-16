@@ -1,27 +1,53 @@
 import pygame
 
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+
 pygame.init()
 
-screen = pygame.display.set_mode((400, 300))
+size = [300,400]
+screen = pygame.display.set_mode(size)
+
 done = False
 blue = True
+
+clock = pygame.time.Clock()
+
 x = 30
 y = 30
 
-clock = pygame.time.Clock()
+font = pygame.font.Font(None, 36)
+
+game_over = False
 
 while not done:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             done = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            blue = not blue
-    y+=1.5
-    pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_SPACE]: y-=7
 
-    screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(x, y, 45, 45))
+    if y > 350 or y < 0:
+        game_over = True
+
+    if not game_over:
+        y += 2
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_SPACE]: y-= 15
+
+    screen.fill(BLACK)
+
+    pygame.draw.rect(screen, (0, 128, 255), [x, y, 50, 50])
+
+    if game_over:
+        # If game over is true, draw game over
+        text = font.render("Game Over", True, WHITE)
+        text_rect = text.get_rect()
+        text_x = screen.get_width() / 2 - text_rect.width / 2
+        text_y = screen.get_height() / 2 - text_rect.height / 2
+        screen.blit(text, [text_x, text_y])
+
+    clock.tick(60)
 
     pygame.display.flip()
-    clock.tick(60)
+
+pygame.quit()
