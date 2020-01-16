@@ -1,8 +1,10 @@
 import pygame
+import random
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
+BLUE = (0, 128, 255)
 
 pygame.init()
 
@@ -10,7 +12,7 @@ size = [300,400]
 screen = pygame.display.set_mode(size)
 
 done = False
-blue = True
+#blue = True
 
 clock = pygame.time.Clock()
 
@@ -26,17 +28,18 @@ while not done:
         if event.type==pygame.QUIT:
             done = True
 
+
     if y > 350 or y < 0:
         game_over = True
 
     if not game_over:
-        y += 2
+        y += 2.5
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]: y-= 12
 
     screen.fill(BLACK)
 
-    pygame.draw.rect(screen, (0, 128, 255), [x, y, 50, 50])
+    pygame.draw.rect(screen, BLUE, [x, y, 50, 50])
 
     if game_over:
         # If game over is true, draw game over
