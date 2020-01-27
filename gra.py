@@ -8,14 +8,14 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 BLUE = (0, 128, 255)
-FPS = 35
+FPS = 30
 
 x = 30
 y = 30
 
 pygame.init()
 
-size = [300,400]
+size = [SCREEN_WIDTH,SCREEN_HEIGHT]
 screen = pygame.display.set_mode(size)
 
 done = False
@@ -28,7 +28,7 @@ x_gracz = 30
 y_gracz = 30
 
 #współrzędne początkowe dolnej przeszkody
-y_down = random.randint(30,350)
+y_down = random.randint(30,300)
 x_down = 290
 
 #długość dolnej
@@ -62,6 +62,7 @@ while not done:
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE]: y_gracz-= 12
 
+    #ruch przeszkód
     if not game_over:
         x_up-=2.5
         x_down-=2.5
