@@ -56,8 +56,8 @@ while not done:
     #kończy
     if y_gracz > 375 or y_gracz < 0:
         game_over = True
-    if x_up < 45 and x_down < 40:
-        if y_gracz >= y_down-25:
+    if x_up < 45 and x_down < 45:
+        if y_gracz >= y_down-25 :
             game_over = True
     #sterowanie
     if not game_over:
