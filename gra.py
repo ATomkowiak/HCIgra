@@ -15,7 +15,7 @@ y = 30
 
 pygame.init()
 
-score=0
+score = 0
 size = [SCREEN_WIDTH,SCREEN_HEIGHT]
 screen = pygame.display.set_mode(size)
 
@@ -94,6 +94,13 @@ while not done:
 
         pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
         pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
+
+    #wyświetlanie punktów
+    if  not game_over:
+        pointsDisplay = points_font.render('PUNKTY: ' + str(score), True, WHITE)
+        pointsRect = pointsDisplay.get_rect()
+        pointsRect.center = (SCREEN_WIDTH-100, 10)
+        gameDisplay.blit(pointsDisplay, pointsRect)
 
     if game_over:
         # jeśli game_over jest prawidziwe skończ grę
