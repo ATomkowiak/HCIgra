@@ -42,8 +42,13 @@ x_up = 290
 #długosć górnej
 h_up=400 - y_up
 
-font = pygame.font.Font(None, 36)
-
+font_name = pygame.font.match_font('arial')
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
 game_over = False
 done = False
 
@@ -79,7 +84,7 @@ while not done:
     if x_up == 20  and x_down == 20:
         score+=1
         #współrzędne początkowe dolnej przeszkody
-        y_down = random.randint(30,300)
+        y_down = random.randint(30,280)
         x_down = 290
 
         #długość dolnej
@@ -94,21 +99,14 @@ while not done:
 
         pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
         pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
-
-    #wyświetlanie punktów
-    if  not game_over:
-        pointsDisplay = points_font.render('PUNKTY: ' + str(score), True, WHITE)
-        pointsRect = pointsDisplay.get_rect()
-        pointsRect.center = (SCREEN_WIDTH-100, 10)
-        gameDisplay.blit(pointsDisplay, pointsRect)
+        screen.fill(BLACK)
+        draw_text(screen, str(score), 18, 150, 10)
+        #wyświetlanie punktów
 
     if game_over:
         # jeśli game_over jest prawidziwe skończ grę
-        text = font.render("Game Over", True, WHITE)
-        text_rect = text.get_rect()
-        text_x = screen.get_width() / 2 - text_rect.width / 2
-        text_y = screen.get_height() / 2 - text_rect.height / 2
-        screen.blit(text, [text_x, text_y])
+        draw_text(screen, "Game over", 18, 150, 200)
+        draw_text(screen, str(score), 18, 150, 10)
         game_over=False
 
 
