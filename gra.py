@@ -15,6 +15,7 @@ y = 30
 
 pygame.init()
 
+score=0
 size = [SCREEN_WIDTH,SCREEN_HEIGHT]
 screen = pygame.display.set_mode(size)
 
@@ -32,14 +33,14 @@ y_down = random.randint(30,300)
 x_down = 290
 
 #długość dolnej
-h_down = 300 - y_down
+h_down = 400 - y_down
 
 #współrzędne początkowe górnej przeszkody
 y_up = y_down+80
 x_up = 290
 
 #długosć górnej
-h_up=300 - y_up
+h_up=400 - y_up
 
 font = pygame.font.Font(None, 36)
 
@@ -55,7 +56,9 @@ while not done:
     #kończy
     if y_gracz > 375 or y_gracz < 0:
         game_over = True
-
+    if x_up < 45 and x_down < 40:
+        if y_gracz >= y_down-25:
+            game_over = True
     #sterowanie
     if not game_over:
         y_gracz += 2.5
@@ -73,6 +76,24 @@ while not done:
     pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
     pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
 
+    if x_up == 20  and x_down == 20:
+        score+=1
+        #współrzędne początkowe dolnej przeszkody
+        y_down = random.randint(30,300)
+        x_down = 290
+
+        #długość dolnej
+        h_down = 400 - y_down
+
+        #współrzędne początkowe górnej przeszkody
+        y_up = y_down+80
+        x_up = 290
+
+        #długosć górnej
+        h_up=400 - y_up
+
+        pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
+        pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
 
     if game_over:
         # jeśli game_over jest prawidziwe skończ grę
