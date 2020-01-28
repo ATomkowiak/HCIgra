@@ -1,5 +1,9 @@
 import pygame
 import random
+from pyOpenBCI import OpenBCIGangLion
+import multiprocessing as mp
+import blink as blk
+import filterlib as filtr
 
 #stałe
 SCREEN_WIDTH = 300
