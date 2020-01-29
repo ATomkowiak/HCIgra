@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
         if not game_over:
             y_gracz += 2.5
-            if blink.value = 1:
+            if blink.value == 1:
                 y_gracz -= 12
 
         #ruch przeszkód
