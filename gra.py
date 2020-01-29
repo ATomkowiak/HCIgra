@@ -33,14 +33,14 @@ y_up = random.randint(30,250)
 x_up = 290
 
 #współrzędne początkowe dolnej przeszkody
-y_down = y_up+80
+y_down = y_up-80
 x_down = 290
 
 #długość dolnej
 h_down = 400 - y_down
 
 #długosć górnej
-h_up = y_up
+h_up = 400 - y_up
 
 font_name = pygame.font.match_font('arial')
 def draw_text(surf, text, size, x, y):
@@ -77,9 +77,11 @@ while not done:
 
     screen.fill(BLACK) #żeby się kwadrat nie zostawał
 
+    pygame.draw.rect(screen, BLUE, [50,50,20,20])
     pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 25, 25])
     pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
     pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
+
     if x_up == 20  and x_down == 20:
         score+=1
         #współrzędne początkowe dolnej przeszkody
@@ -94,7 +96,7 @@ while not done:
         x_up = 290
 
         #długosć górnej
-        h_up=400 - y_up
+        h_up= 400 - y_up
 
         pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
         pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
