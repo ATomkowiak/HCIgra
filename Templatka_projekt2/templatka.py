@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+#from pyOpenBCI import OpenBCIGanglion
 import multiprocessing as mp
 import pygame as pg
 import pandas as pd
@@ -52,7 +53,7 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink):
 if __name__ == "__main__":
     import pygame
     import random
-    #from pyOpenBCI import OpenBCIGanglion
+
     import multiprocessing as mp
     import blink as blk
     import filterlib as filtr
@@ -85,18 +86,18 @@ if __name__ == "__main__":
     y_gracz = 30
 
     #współrzędne początkowe dolnej przeszkody
-    y_up = random.randint(30,300)
+    #y_up = h_up+80
     x_up = 290
 
     #długość dolnej
-    h_up = 400 - y_up
+    h_up = random.randint(30,300)
 
     #współrzędne początkowe górnej przeszkody
-    y_down = y_up + 80
+    #y_down = y_up + 80
     x_down = 290
 
     #długosć górnej
-    h_down = 400 - y_up
+    h_down = 400 - h_up
 
     font_name = pygame.font.match_font('arial')
     def draw_text(surf, text, size, x, y):
@@ -118,13 +119,18 @@ if __name__ == "__main__":
         if y_gracz > 375 or y_gracz < 0:
             game_over = True
         if x_up < 45 and x_down < 45:
-            if y_gracz >= y_down-25 :
+            if y_gracz >= h_down-25 :
                 game_over = True
         #sterowanie
+        #if not game_over:
+            #y_gracz += 2.5
+            #pressed = pygame.key.get_pressed()
+            #if pressed[pygame.K_SPACE]: y_gracz-= 12
+
         if not game_over:
             y_gracz += 2.5
-            pressed = pygame.key.get_pressed()
-            if pressed[pygame.K_SPACE]: y_gracz-= 12
+            if blink.value = 1:
+                y_gracz -= 12
 
         #ruch przeszkód
         if not game_over:
@@ -134,27 +140,27 @@ if __name__ == "__main__":
         screen.fill(BLACK) #żeby się kwadrat nie zostawał
 
         pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 25, 25])
-        pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
-        pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
+        pygame.draw.rect(screen, GREEN, [x_up, 0, 30, h_up])
+        pygame.draw.rect(screen, GREEN, [x_down, h_up+80 , 30, 400])
 
         if x_up == 20  and x_down == 20:
             score+=1
             #współrzędne początkowe dolnej przeszkody
-            y_down = random.randint(30,280)
+            y_down = h_up +80
             x_down = 290
 
             #długość dolnej
-            h_down = 400 - y_down
+            h_down = h_up + 80
 
             #współrzędne początkowe górnej przeszkody
-            y_up = y_down+80
+            y_up = y_down-80
             x_up = 290
 
             #długosć górnej
-            h_up=400 - y_up
+            h_up= random.randint(30,200)
 
-            pygame.draw.rect(screen, GREEN, [x_down, y_down, 30, h_down])
-            pygame.draw.rect(screen, GREEN, [x_up, y_up, 30, h_up])
+            pygame.draw.rect(screen, GREEN, [x_up, 0, 30, h_up])
+            pygame.draw.rect(screen, GREEN, [x_down,h_up+80 , 30, 400])
             screen.fill(BLACK)
             draw_text(screen, str(score), 18, 150, 10)
             #wyświetlanie punktów
@@ -197,10 +203,6 @@ if __name__ == "__main__":
     # rozpoczęcie podprocesu
     proc_blink_det.start()
     print('subprocess started')
-
-############################################
-# Poniżej należy dodać rozwinięcie programu
-############################################
 
 
 # Zakończenie podprocesów
