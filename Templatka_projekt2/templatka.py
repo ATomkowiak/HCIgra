@@ -51,6 +51,13 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink):
             board = OpenBCIGanglion(mac=mac_adress)
             board.start_stream(detect_blinks)
 if __name__ == "__main__":
+    import pygame
+    import random
+    #from pyOpenBCI import OpenBCIGanglion
+    import multiprocessing as mp
+    import blink as blk
+    import filterlib as filtr
+
     #stałe
     SCREEN_WIDTH = 300
     SCREEN_HEIGHT = 400
@@ -79,18 +86,18 @@ if __name__ == "__main__":
     y_gracz = 30
 
     #współrzędne początkowe dolnej przeszkody
-    y_down = random.randint(30,300)
-    x_down = 290
-
-    #długość dolnej
-    h_down = 400 - y_down
-
-    #współrzędne początkowe górnej przeszkody
-    y_up = y_down+80
+    y_up = random.randint(30,300)
     x_up = 290
 
+    #długość dolnej
+    h_up = 400 - y_up
+
+    #współrzędne początkowe górnej przeszkody
+    y_down = y_up + 80
+    x_down = 290
+
     #długosć górnej
-    h_up=400 - y_up
+    h_down = 400 - y_up
 
     font_name = pygame.font.match_font('arial')
     def draw_text(surf, text, size, x, y):
@@ -117,9 +124,8 @@ if __name__ == "__main__":
         #sterowanie
         if not game_over:
             y_gracz += 2.5
-            pressed = blink.value==1
-            if pressed:
-                y_gracz-= 12
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_SPACE]: y_gracz-= 12
 
         #ruch przeszkód
         if not game_over:

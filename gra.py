@@ -1,6 +1,6 @@
 import pygame
 import random
-from pyOpenBCI import OpenBCIGangLion
+from pyOpenBCI import OpenBCIGanglion
 import multiprocessing as mp
 import blink as blk
 import filterlib as filtr
