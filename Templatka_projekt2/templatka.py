@@ -8,6 +8,7 @@ import filterlib as flt
 import blink as blk
 
 
+
 def blinks_detector(quit_program, blink_det, blinks_num, blink):
     def detect_blinks(sample):
         if SYMULACJA_SYGNALU:
@@ -57,8 +58,8 @@ if __name__ == "__main__":
     #######################
     SYMULACJA_SYGNALU = True
     #######################
-    if not SYMULACJA_SYGNALU:
-        from pyOpenBCI import OpenBCIGanglion
+    #if not SYMULACJA_SYGNALU:
+        #from pyOpenBCI import OpenBCIGanglion
 
     mac_adress = 'd2:b4:11:81:48:ad'
 
@@ -127,6 +128,10 @@ if __name__ == "__main__":
     #długosć górnej
     h_down = 400 - h_up
 
+    #wartość graniczna przeszkód
+    up = 0+h_up+40
+    down = h_down-40
+
     font_name = pygame.font.match_font('arial')
     def draw_text(surf, text, size, x, y):
         font = pygame.font.Font(font_name, size)
@@ -143,21 +148,17 @@ if __name__ == "__main__":
             if event.type==pygame.QUIT:
                 done = True
 
-        #kończy
-        if y_gracz > 375 or y_gracz < 0:
-            game_over = True
-        if x_up < 45 and x_down < 45:
-            if y_gracz >= h_down-25 :
-                game_over = True
+    
         #sterowanie
         #if not game_over:
             #y_gracz += 2.5
-            #pressed = pygame.key.get_pressed()
+            #pressed = pyame.key.get_pressed()
             #if pressed[pygame.K_SPACE]: y_gracz-= 12
 
         if not game_over:
             y_gracz += 2.5
-            if blink.value == 1:
+            pressed = pygame.key.get_pressed()
+            if blink.value == 1 or pressed[pygame.K_SPACE]:
                 y_gracz -= 12
                 blink.value = 0
 
@@ -188,12 +189,34 @@ if __name__ == "__main__":
             #długosć górnej
             h_up= random.randint(30,200)
 
+            up = 0+h_up-40
+            down = 400-h_down+40
+
             pygame.draw.rect(screen, GREEN, [x_up, 0, 30, h_up])
             pygame.draw.rect(screen, GREEN, [x_down,h_up+80 , 30, 400])
             screen.fill(BLACK)
             draw_text(screen, str(score), 18, 150, 10)
             #wyświetlanie punktów
 
+            #kończy
+            if y_gracz > 375 or y_gracz < 0:
+                game_over = True
+            if x_up < 45 and x_down < 45:
+                if y_gracz >= up:
+                    game_over = True
+
+            #sterowanie
+            #if not game_over:
+                #y_gracz += 2.5
+                #pressed = pyame.key.get_pressed()
+                #if pressed[pygame.K_SPACE]: y_gracz-= 12
+
+            if not game_over:
+                y_gracz += 2.5
+                pressed = pygame.key.get_pressed()
+                if blink.value == 1 or pressed[pygame.K_SPACE]:
+                    y_gracz -= 12
+                    blink.value = 0
         if game_over:
             # jeśli game_over jest prawidziwe skończ grę
             draw_text(screen, "Game over", 18, 150, 200)
