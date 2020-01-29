@@ -157,7 +157,8 @@ if __name__ == "__main__":
 
         if not game_over:
             y_gracz += 2.5
-            if blink.value == 1:
+            pressed = pygame.key.get_pressed()
+            if (blink.value == 1 or pressed[pygame.K_SPACE]):
                 y_gracz -= 12
                 blink.value = 0
 
