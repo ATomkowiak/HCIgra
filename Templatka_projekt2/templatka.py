@@ -86,18 +86,18 @@ if __name__ == "__main__":
     y_gracz = 30
 
     #współrzędne początkowe dolnej przeszkody
-    y_down = random.randint(30,300)
-    x_down = 290
-
-    #długość dolnej
-    h_down = 400 - y_down
-
-    #współrzędne początkowe górnej przeszkody
-    y_up = y_down+80
+    y_up = random.randint(30,300)
     x_up = 290
 
+    #długość dolnej
+    h_up = 400 - y_up
+
+    #współrzędne początkowe górnej przeszkody
+    y_down = y_up + 80
+    x_down = 290
+
     #długosć górnej
-    h_up=400 - y_up
+    h_down = 400 - y_up
 
     font_name = pygame.font.match_font('arial')
     def draw_text(surf, text, size, x, y):
