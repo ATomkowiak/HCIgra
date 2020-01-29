@@ -51,6 +51,34 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink):
             board = OpenBCIGanglion(mac=mac_adress)
             board.start_stream(detect_blinks)
 if __name__ == "__main__":
+
+    global mac_adress, SYMULACJA_SYGNALU
+
+    #######################
+    SYMULACJA_SYGNALU = True
+    #######################
+    if not SYMULACJA_SYGNALU:
+        from pyOpenBCI import OpenBCIGanglion
+
+    mac_adress = 'd2:b4:11:81:48:ad'
+
+
+    blink_det = mp.Queue()
+    blink = mp.Value('i', 0)
+    blinks_num = mp.Value('i', 0)
+    connected = mp.Event()
+    quit_program = mp.Event()
+
+    proc_blink_det = mp.Process(
+        name='proc_',
+        target=blinks_detector,
+        args=(quit_program, blink_det, blinks_num, blink,)
+        )
+
+    # rozpoczęcie podprocesu
+    proc_blink_det.start()
+    print('subprocess started')
+
     import pygame
     import random
 
@@ -129,8 +157,9 @@ if __name__ == "__main__":
 
         if not game_over:
             y_gracz += 2.5
-            if blink.value = 1:
+            if blink.value == 1:
                 y_gracz -= 12
+                blink.value = 0
 
         #ruch przeszkód
         if not game_over:
@@ -177,32 +206,6 @@ if __name__ == "__main__":
         pygame.display.flip()
 
     pygame.quit()
-    global mac_adress, SYMULACJA_SYGNALU
-
-    #######################
-    SYMULACJA_SYGNALU = True
-    #######################
-    if not SYMULACJA_SYGNALU:
-        from pyOpenBCI import OpenBCIGanglion
-
-    mac_adress = 'd2:b4:11:81:48:ad'
-
-
-    blink_det = mp.Queue()
-    blink = mp.Value('i', 0)
-    blinks_num = mp.Value('i', 0)
-    connected = mp.Event()
-    quit_program = mp.Event()
-
-    proc_blink_det = mp.Process(
-        name='proc_',
-        target=blinks_detector,
-        args=(quit_program, blink_det, blinks_num, blink,)
-        )
-
-    # rozpoczęcie podprocesu
-    proc_blink_det.start()
-    print('subprocess started')
 
 
 # Zakończenie podprocesów
