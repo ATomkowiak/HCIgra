@@ -6,7 +6,7 @@ import pygame as pg
 import pandas as pd
 import filterlib as flt
 import blink as blk
-import pygame 
+import pygame
 import random
 #from pyOpenBCI import OpenBCIGanglion
 
@@ -144,19 +144,20 @@ if __name__ == "__main__":
 
 
         if not game_over:
-            y_gracz += 2.5
+            y_gracz += 1
             pressed = pygame.key.get_pressed()
-            if (blink.value == 1 or pressed[pygame.K_SPACE]):
-                y_gracz -= 12
+            if blink.value == 1:
+                y_gracz -= 25
                 blink.value = 0
+            if pressed[pygame.K_SPACE]:
+                y_gracz -= 12
 
         #kończy
         if y_gracz > 375 or y_gracz < 0:
             game_over = True
 
-        if x_down < 45 and x_up < 45:
-            if y_gracz >= h_down + 30 and y_gracz <= h_up + 30:
-                game_over = True
+        if x_down <= 45 and x_up <= 45 and y_gracz >= h_down and y_gracz <= h_up:
+            game_over = True
 
         #ruch przeszkód
         if not game_over:
@@ -191,11 +192,6 @@ if __name__ == "__main__":
             screen.fill(BLACK)
             draw_text(screen, str(score), 18, 150, 10)
             #wyświetlanie punktów
-
-            if x_down < 45 and x_up < 45:
-                if y_gracz >= h_down + 30 and y_gracz <= h_up + 30:
-                    game_over = True
-                    break
 
         if game_over:
             # jeśli game_over jest prawidziwe skończ grę
