@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
-#from pyOpenBCI import OpenBCIGanglion
+
 import multiprocessing as mp
 import pygame as pg
 import pandas as pd
 import filterlib as flt
 import blink as blk
-import pygame
+import pygame 
 import random
+#from pyOpenBCI import OpenBCIGanglion
 
 
-def blinks_detector(quit_program, blink_det, blinks_num, blink):
+def blinks_detector(quit_program, blink_det, blinks_num, blink,):
     def detect_blinks(sample):
         if SYMULACJA_SYGNALU:
             smp_flted = sample
@@ -22,7 +23,7 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink):
         brt.blink_detect(smp_flted, -38000)
         if brt.new_blink:
             if brt.blinks_num == 1:
-                connected.set()
+                #connected.set()
                 print('CONNECTED. Speller starts detecting blinks.')
             else:
                 blink_det.put(brt.blinks_num)
@@ -34,24 +35,30 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink):
                 print('Disconnect signal sent...')
                 board.stop_stream()
 
-    if __name__ == '__main__':
-        clock = pg.time.Clock()
 
-        frt = flt.FltRealTime()
-        brt = blk.BlinkRealTime()
+####################################################
+    SYMULACJA_SYGNALU = True
+####################################################
+    mac_adress = 'd2:b4:11:81:48:ad'
+####################################################
 
-        if SYMULACJA_SYGNALU:
-            df = pd.read_csv('dane_do_symulacji/data.csv')
-            for sample in df['signal']:
-                if quit_program.is_set():
-                    break
-                detect_blinks(sample)
-                clock.tick(200)
-            print('KONIEC SYGNAŁU')
-            quit_program.set()
-        else:
-            board = OpenBCIGanglion(mac=mac_adress)
-            board.start_stream(detect_blinks)
+    clock = pg.time.Clock()
+    frt = flt.FltRealTime()
+    brt = blk.BlinkRealTime()
+
+    if SYMULACJA_SYGNALU:
+        df = pd.read_csv('dane_do_symulacji/data.csv')
+        for sample in df['signal']:
+            if quit_program.is_set():
+                break
+            detect_blinks(sample)
+            clock.tick(200)
+        print('KONIEC SYGNAŁU')
+        quit_program.set()
+    else:
+        board = OpenBCIGanglion(mac=mac_adress)
+        board.start_stream(detect_blinks)
+
 if __name__ == "__main__":
 
     global mac_adress, SYMULACJA_SYGNALU
