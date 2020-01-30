@@ -6,6 +6,8 @@ import pygame as pg
 import pandas as pd
 import filterlib as flt
 import blink as blk
+import pygame
+import random
 
 
 def blinks_detector(quit_program, blink_det, blinks_num, blink):
@@ -79,13 +81,6 @@ if __name__ == "__main__":
     proc_blink_det.start()
     print('subprocess started')
 
-    import pygame
-    import random
-
-    import multiprocessing as mp
-    import blink as blk
-    import filterlib as filtr
-
     #stałe
     SCREEN_WIDTH = 300
     SCREEN_HEIGHT = 400
@@ -94,9 +89,6 @@ if __name__ == "__main__":
     GREEN = (0, 255, 0)
     BLUE = (0, 128, 255)
     FPS = 30
-
-    x = 30
-    y = 30
 
     pygame.init()
 
@@ -113,19 +105,13 @@ if __name__ == "__main__":
     x_gracz = 30
     y_gracz = 30
 
-    #współrzędne początkowe dolnej przeszkody
-    #y_up = h_up+80
+    #wielkość górnej przeszkody
+    h_up = random.randint(30,300)
     x_up = 290
 
-    #długość dolnej
-    h_up = random.randint(30,300)
-
-    #współrzędne początkowe górnej przeszkody
-    #y_down = y_up + 80
+    #wielkość dolnej przeszkody
+    h_down = h_up + 80
     x_down = 290
-
-    #długosć górnej
-    h_down = 400 - h_up
 
     font_name = pygame.font.match_font('arial')
     def draw_text(surf, text, size, x, y):
@@ -143,17 +129,12 @@ if __name__ == "__main__":
             if event.type==pygame.QUIT:
                 done = True
 
-        #kończy
-        if y_gracz > 375 or y_gracz < 0:
-            game_over = True
-        if x_up < 45 and x_down < 45:
-            if y_gracz >= h_down-25 :
-                game_over = True
         #sterowanie
         #if not game_over:
             #y_gracz += 2.5
             #pressed = pygame.key.get_pressed()
             #if pressed[pygame.K_SPACE]: y_gracz-= 12
+
 
         if not game_over:
             y_gracz += 2.5
@@ -162,44 +143,57 @@ if __name__ == "__main__":
                 y_gracz -= 12
                 blink.value = 0
 
+        #kończy
+        if y_gracz > 375 or y_gracz < 0:
+            game_over = True
+
+        if x_down < 45 and x_up < 45:
+            if y_gracz >= h_down + 30 and y_gracz <= h_up + 30:
+                game_over = True
+
         #ruch przeszkód
         if not game_over:
             x_up-=2.5
-            x_down-=2.5
+            x_down -=2.5
 
         screen.fill(BLACK) #żeby się kwadrat nie zostawał
 
         pygame.draw.rect(screen, BLUE, [x_gracz, y_gracz, 25, 25])
-        pygame.draw.rect(screen, GREEN, [x_up, 0, 30, h_up])
-        pygame.draw.rect(screen, GREEN, [x_down, h_up+80 , 30, 400])
+        pygame.draw.rect(screen, GREEN, [x_up , 0, 30, h_up])
+        pygame.draw.rect(screen, GREEN, [x_down , h_up + 80 , 30, 400])
 
-        if x_up == 20  and x_down == 20:
+        if x_up == 20 and x_down == 20:
             score+=1
-            #współrzędne początkowe dolnej przeszkody
-            y_down = h_up +80
-            x_down = 290
 
-            #długość dolnej
-            h_down = h_up + 80
-
-            #współrzędne początkowe górnej przeszkody
-            y_up = y_down-80
+            #współrzędne górnej
             x_up = 290
 
-            #długosć górnej
-            h_up= random.randint(30,200)
+            #wielkość górnej przeszkody
+            h_up = random.randint(30,300)
 
-            pygame.draw.rect(screen, GREEN, [x_up, 0, 30, h_up])
-            pygame.draw.rect(screen, GREEN, [x_down,h_up+80 , 30, 400])
+
+            #współrzędne początkowe dolnej przeszkody
+            y_down = h_up + 80
+            x_down = 290
+
+            #wielkość dolnej przeszkody
+            h_down = h_up + 80
+
+            pygame.draw.rect(screen, GREEN, [x_up , 0, 30, h_up])
+            pygame.draw.rect(screen, GREEN, [x_down , h_down , 30, 400])
             screen.fill(BLACK)
             draw_text(screen, str(score), 18, 150, 10)
             #wyświetlanie punktów
+
+            if x_down < 45 and x_up < 45:
+                if y_gracz >= h_down + 30 and y_gracz <= h_up + 30:
+                    game_over = True
 
         if game_over:
             # jeśli game_over jest prawidziwe skończ grę
             draw_text(screen, "Game over", 18, 150, 200)
             draw_text(screen, str(score), 18, 150, 10)
-            game_over=False
+            game_over = True
 
 
         clock.tick(FPS)
