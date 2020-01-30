@@ -8,7 +8,7 @@ import filterlib as flt
 import blink as blk
 import pygame
 import random
-#from pyOpenBCI import OpenBCIGanglion
+from pyOpenBCI import OpenBCIGanglion
 
 
 def blinks_detector(quit_program, blink_det, blinks_num, blink,):
@@ -37,7 +37,7 @@ def blinks_detector(quit_program, blink_det, blinks_num, blink,):
 
 
 ####################################################
-    SYMULACJA_SYGNALU = True
+    SYMULACJA_SYGNALU = False
 ####################################################
     mac_adress = 'd2:b4:11:81:48:ad'
 ####################################################
@@ -136,7 +136,7 @@ if __name__ == "__main__":
             if event.type==pygame.QUIT:
                 done = True
 
-        #sterowanie
+        #sterowanie stare (tylko spacja)
         #if not game_over:
             #y_gracz += 2.5
             #pressed = pygame.key.get_pressed()
