@@ -188,6 +188,7 @@ if __name__ == "__main__":
             if x_down < 45 and x_up < 45:
                 if y_gracz >= h_down + 30 and y_gracz <= h_up + 30:
                     game_over = True
+                    break
 
         if game_over:
             # jeśli game_over jest prawidziwe skończ grę
